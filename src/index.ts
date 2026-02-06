@@ -1,12 +1,13 @@
 import {setUser, readConfig} from "./config"
 import { 
-    handlerLogin, 
-    handlerRegister,
-    handlerReset,
-    handlerUsers,
     registerCommand, 
     runCommand, 
     type CommandsRegistry } from "./commands"
+import { handlerLogin } from "./commands/login";
+import { handlerRegister } from "./commands/register";
+import { handlerReset } from "./commands/reset";
+import { handlerUsers } from "./commands/users";
+import { handlerAgg } from "./commands/agg";
 import console from "node:console";
 
 async function main() {
@@ -15,6 +16,7 @@ async function main() {
     registerCommand(cmdsRegistry, "register", handlerRegister);
     registerCommand(cmdsRegistry, "reset", handlerReset);
     registerCommand(cmdsRegistry, "users", handlerUsers);
+    registerCommand(cmdsRegistry, "agg", handlerAgg);
     const args = process.argv.slice(2,);
     if (args.length === 0) {
         console.error("Command name expected.");
