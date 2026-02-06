@@ -45,5 +45,9 @@ export async function markFeedFeched(feedId: string) {
 }
 
 export async function getNextFeedToFetch() {
+    const [feed] = await db.select().from(feeds)
+    .orderBy(sql`${feeds.lastFetchedAt} nulls first`)
+    .limit(1);
 
+    return feed;
 }

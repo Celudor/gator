@@ -1,6 +1,4 @@
 import { XMLParser } from "fast-xml-parser";
-import { channel } from "node:diagnostics_channel";
-import { link } from "node:fs";
 
 type RSSItem = {
     title: string;
