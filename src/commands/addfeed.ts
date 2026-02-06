@@ -2,6 +2,7 @@ import {readConfig} from "../config";
 import {getUser} from "../lib/db/queries/users";
 import { createFeed } from "../lib/db/queries/feeds";
 import {type User, type Feed} from "../lib/db/schema";
+import { createFeedFollow } from "src/lib/db/queries/feedfollows";
 
 export async function handlerAddFeed(cmdName: string, ...args: string[]) {
     if (args.length < 2) {
@@ -15,11 +16,13 @@ export async function handlerAddFeed(cmdName: string, ...args: string[]) {
     }
     const user = await getUser(username);
     const feed = await createFeed(feedName, feedUrl, user.id);
+    await createFeedFollow(user.id, feed.id);
     printFeed(user, feed);
+
 }
 
 function printFeed(user: User, feed: Feed) {
-    console.log(user);
-    console.log(feed);
+    console.log(feed.name);
+    console.log(user.name);
 }
 

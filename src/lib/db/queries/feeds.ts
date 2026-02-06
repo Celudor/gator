@@ -31,3 +31,8 @@ export async function listFeeds() {
     }).from(feeds).leftJoin(users, eq(feeds.userId, users.id))
     return result;
 }
+
+export async function getFeedByUrl(url: string) {
+    const [feed] = await db.select().from(feeds).where(eq(feeds.url, url));
+    return feed;
+}
