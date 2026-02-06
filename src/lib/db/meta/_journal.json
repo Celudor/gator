@@ -8,6 +8,13 @@
       "when": 1770234967418,
       "tag": "0000_gorgeous_gravity",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770364224226,
+      "tag": "0001_dizzy_lyja",
+      "breakpoints": true
     }
   ]
 }

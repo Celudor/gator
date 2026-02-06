@@ -8,7 +8,8 @@ import { handlerRegister } from "./commands/register";
 import { handlerReset } from "./commands/reset";
 import { handlerUsers } from "./commands/users";
 import { handlerAgg } from "./commands/agg";
-import console from "node:console";
+import { handlerAddFeed } from "./commands/addfeed";
+import { handlerFeeds } from "./commands/feeds";
 
 async function main() {
     const cmdsRegistry: CommandsRegistry = {};
@@ -17,6 +18,9 @@ async function main() {
     registerCommand(cmdsRegistry, "reset", handlerReset);
     registerCommand(cmdsRegistry, "users", handlerUsers);
     registerCommand(cmdsRegistry, "agg", handlerAgg);
+    registerCommand(cmdsRegistry, "addfeed", handlerAddFeed);
+    registerCommand(cmdsRegistry, "feeds", handlerFeeds);
+
     const args = process.argv.slice(2,);
     if (args.length === 0) {
         console.error("Command name expected.");
