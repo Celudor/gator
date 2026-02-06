@@ -1,14 +1,7 @@
-import { readConfig } from "src/config";
 import { getFeedFollowsForUser } from "src/lib/db/queries/feedfollows";
-import { getUser } from "src/lib/db/queries/users";
+import { type User } from "src/lib/db/schema";
 
-export async function handlerFollowing(cmdName: string, ...args: string[]) {
-    const username = readConfig().currentUserName;
-    if (!username) {
-        throw new Error("user not registered");
-    }
-
-    const user = await getUser(username);
+export async function handlerFollowing(cmdName: string, user: User, ...args: string[]) {
     const results = await getFeedFollowsForUser(user.id);
     for (const result of results) {
         console.log(`Feed name: ${result.feedName}`);
