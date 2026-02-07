@@ -1,9 +1,29 @@
 import { scrapeFeeds } from "src/scrapefeeds";
+
 export async function handlerAgg(cmdName: string, ...args: string[]) {
-    //if (args.length === 0) {
-    //    throw new Error(`${cmdName} requires url`);
-    //}
-    //const url = args[0];
+    if (args.length === 0) {
+        throw new Error(`${cmdName} requires time between requests`);
+    }
+    const time_between_requests = parseDuration(args[0]);
+    if (!time_between_requests) {
+        throw new Error(`invalida format ${args[0]}- use format 1h 30m 15s or 3500ms`);
+    }
+    console.log(`Collecting feeds every ${args[0]}`);
+
+    scrapeFeeds().catch(handleError);
+
+    const interval = setInterval(()=>{
+        scrapeFeeds().catch(handleError);
+    }, time_between_requests);
+
+    await new Promise<void>((resolve)=>{
+        process.on("SIGINT", () => {
+            console.log("Shutting donw feed aggregator...");
+            clearInterval(interval);
+            resolve();
+        })
+    });
+
     await scrapeFeeds();
 }
 
@@ -29,4 +49,8 @@ function parseDuration(durationStr: string) {
             return;
     }
 
+}
+
+function handleError(error: unknown) {
+    console.error(`Error scraping feeds: ${error instanceof Error ? error.message : error}`);
 }

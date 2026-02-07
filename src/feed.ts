@@ -1,13 +1,13 @@
 import { XMLParser } from "fast-xml-parser";
 
-type RSSItem = {
+export type RSSItem = {
     title: string;
     link: string;
     description: string;
     pubDate: string;
 };
 
-type RSSFeed = {
+export type RSSFeed = {
     channel: {
         title: string;
         link: string;
